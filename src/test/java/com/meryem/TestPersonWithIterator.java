@@ -1,24 +1,36 @@
 package com.meryem;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
+import java.util.Iterator;
 
 public class TestPersonWithIterator {
-    public static void main(String[] args) {
-        Set<person> people = new HashSet<>();
-        people.add(new person(1, "meryem"));
-        people.add(new person(2, "rania"));
-        people.add(new person(3, "douae"));
 
-        // Suppression avec iterator (sécurisé)
+    @Test
+    public void testRemoveWithIterator() {
+        Set<person> people = new HashSet<>();
+        people.add(new person(1, "Meryem"));
+        people.add(new person(2, "Rania"));
+        people.add(new person(3, "Douae"));
+
         Iterator<person> iterator = people.iterator();
         while (iterator.hasNext()) {
             person person = iterator.next();
-            if (person.getName().equals("rania")) {
+            if (person.getName().equals("Rania")) {
                 iterator.remove(); // Suppression sécurisée
             }
         }
 
-        System.out.println("Set après suppression de 'rania' : " + people);
+        // Vérification que Rania a été supprimée
+        boolean raniaExists = false;
+        for (person person : people) {
+            if (person.getName().equals("Rania")) {
+                raniaExists = true;
+                break;
+            }
+        }
+        assertFalse(raniaExists); // Rania ne doit plus être dans le set
     }
 }
